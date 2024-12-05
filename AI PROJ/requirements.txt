@@ -1,4 +1,4 @@
 flask
 openai
-sqlite4
+sqlite3
 werkzeug
