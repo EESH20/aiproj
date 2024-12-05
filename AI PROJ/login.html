@@ -1,0 +1,62 @@
+<div id="auth">
+    <input id="username" placeholder="Username">
+    <input id="password" type="password" placeholder="Password">
+    <button onclick="signup()">Signup</button>
+    <button onclick="login()">Login</button>
+    <button onclick="logout()">Logout</button>
+</div>
+
+<script>
+    async function signup() {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        const response = await fetch('/signup', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password }),
+        });
+
+        const data = await response.json();
+        alert(data.message || data.error);
+    }
+
+    async function login() {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        const response = await fetch('/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password }),
+        });
+
+        const data = await response.json();
+        alert(data.message || data.error);
+    }
+
+    async function logout() {
+        const response = await fetch('/logout', { method: 'POST' });
+        const data = await response.json();
+        alert(data.message || data.error);
+    }
+</script>
+<button onclick="getHistory()">Get History</button>
+
+<script>
+    async function getHistory() {
+        const response = await fetch('/history', { method: 'GET' });
+        const data = await response.json();
+
+        const chatBox = document.getElementById('chat-box');
+        chatBox.innerHTML = ''; // Clear current chat
+
+        data.forEach(entry => {
+            chatBox.innerHTML += `
+                <div class="chat user">${entry.user_input}</div>
+                <div class="chat bot">${entry.bot_response}</div>
+                <div class="timestamp">${entry.timestamp}</div>
+            `;
+        });
+    }
+</script>
