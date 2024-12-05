@@ -1,6 +1,3 @@
-from dbm import sqlite3
-
-
 def create_database():
     conn = sqlite3.connect('chatbot.db')
     cursor = conn.cursor()
